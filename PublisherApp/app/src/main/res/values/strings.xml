@@ -1,0 +1,27 @@
+<!--
+ Copyright 2023 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">The Daily News</string>
+    <string name="title">TODAY\'S GOOD NEWS</string>
+    <string name="subtitle">Catch up on today\'s most uplifting stories!</string>
+    <string name="author">John Doe</string>
+    <string name="metadata">July 30 • 3 min read</string>
+    <string-array name="paragraphs">
+        <item>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque convallis suscipit risus eu blandit. Maecenas quis convallis lectus, id scelerisque eros. Sed sit amet mauris leo. Praesent ex lorem, efficitur at accumsan sed, euismod eu tortor. Pellentesque sed sodales nisl, vel sollicitudin mi. Donec accumsan tortor a odio suscipit, eget pretium elit tristique.</item>
+        <item>Aliquam erat volutpat. Integer nulla orci, dignissim at urna non, sollicitudin tristique massa. Phasellus ut ante quis libero sollicitudin faucibus nec id urna. Nullam tempus risus eget eleifend mattis. Aenean ut sem at diam aliquam vestibulum. Vestibulum sed posuere lorem. Fusce neque turpis, ultrices in est non, pretium euismod eros. In vel nisi consequat nisl dignissim finibus ut sed arcu.</item>
+    </string-array>
+</resources>

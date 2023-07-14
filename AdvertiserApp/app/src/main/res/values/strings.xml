@@ -1,0 +1,67 @@
+<!--
+ Copyright 2023 The Android Open Source Project
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">Travel Aid</string>
+    <string name="header_text">Select a destination:</string>
+    <string name="book_trip">Book Now</string>
+    <string name="home">Home</string>
+    <string-array name="destinations">
+        <item>Athens</item>
+        <item>Berlin</item>
+        <item>Cairo</item>
+        <item>Delhi</item>
+    </string-array>
+    <string name="athens">Athens</string>
+    <string name="berlin">Berlin</string>
+    <string name="delhi">Delhi</string>
+    <string name="cairo">Cairo</string>
+    <string name="athens_desc">
+        Athens, Greece is a city that is often attributed as being the birthplace of western
+        civilization! There are plenty of famous ancient ruins to visit, including The Acropolis,
+        The Parthenon, and many others. The museums in Athens feature exhibits that represent the
+        arts and culture of ancient and modern Greece.\n\n
+
+        Furthermore, the food in Greece is a reason to go! Our favorites include moussaka, souvlaki,
+        and the amazing assortments of street food and family faire!\n\n
+    </string>
+    <string name="berlin_desc">
+        Berlin has been a hub of European history since the Prussian Empire.
+        Berlin is full of landmarks to visit, including the Brandenburg Gate, the Reichstag
+        building, the remnants of the Berlin Wall, and numerous museums, parks and other scenic
+        attractions!\n\n
+    </string>
+    <string name="cairo_desc">
+        Cairo in Egypt is one of the most famous cities in the world. The Pyramids of Giza are
+        perhaps Cairo\'s biggest attraction. There are numerous archaeological sites, museums, and
+        cultural attractions, including the Egyptian Museum.\n\n
+    </string>
+    <string name="delhi_desc">
+        Delhi is full of cultural attractions and history. When in Delhi, be sure to visit the Red
+        Fort, the Jama Masjid, and Humayun\'s Tomb. There are many museums and parks to see,
+        including the National Museum and Akshardham Temple.\n\n
+    </string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Phasellus lacinia venenatis semper. Nulla interdum, sapien at venenatis porttitor,
+        mi mi fringilla mauris, eget consequat dolor arcu lobortis felis. Proin fringilla feugiat
+        venenatis. Integer velit metus, volutpat a mauris ac, suscipit tristique erat. Cras
+        sollicitudin ac velit eget facilisis. Duis dapibus suscipit metus, id commodo diam
+        vehicula vitae. Praesent scelerisque quam non nisl dapibus, nec venenatis velit sagittis.
+        Sed dolor elit, facilisis et eleifend a, imperdiet nec risus. Vestibulum aliquet blandit
+        neque, vel commodo turpis sagittis sit amet. Curabitur quis tristique dolor. Aenean sit amet
+        nibh elementum, ultrices lacus vitae, sodales diam. Praesent malesuada ante quis lacinia
+        luctus.</string>
+</resources>
