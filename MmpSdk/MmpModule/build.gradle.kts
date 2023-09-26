@@ -21,11 +21,10 @@ plugins {
 
 android {
     namespace = "com.example.mmpsdk"
-    compileSdk = 33
-    compileSdkExtension = 5
+    compileSdkPreview = "UpsideDownCakePrivacySandbox"
 
     defaultConfig {
-        minSdk = 33
+        minSdkPreview = "UpsideDownCakePrivacySandbox"
     }
 
     buildTypes {
@@ -44,6 +43,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildToolsVersion = "34.0.0 rc3"
 }
 
 dependencies {

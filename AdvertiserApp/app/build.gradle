@@ -20,13 +20,11 @@ plugins {
 
 android {
     namespace 'com.example.advertiserapp'
-    compileSdk = 33
-    compileSdkExtension = 5
+    compileSdkPreview = "UpsideDownCakePrivacySandbox"
 
     defaultConfig {
         applicationId "com.example.advertiserapp"
-        targetSdkVersion 33
-        minSdkVersion 33
+        minSdkPreview = "UpsideDownCakePrivacySandbox"
 
         versionCode 1
         versionName "1.0"
@@ -60,6 +58,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    buildToolsVersion '34.0.0 rc3'
 }
 
 dependencies {

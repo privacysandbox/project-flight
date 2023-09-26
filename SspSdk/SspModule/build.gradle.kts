@@ -21,9 +21,11 @@ plugins {
 
 android {
     namespace = "com.example.sspsdk"
-    compileSdk = 33
-    compileSdkExtension = 5
+    compileSdkPreview = "UpsideDownCakePrivacySandbox"
 
+    defaultConfig {
+        minSdkPreview = "UpsideDownCakePrivacySandbox"
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -40,6 +42,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildToolsVersion = "34.0.0 rc3"
 }
 
 dependencies {

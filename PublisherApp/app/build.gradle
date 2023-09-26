@@ -20,14 +20,12 @@ plugins {
 
 android {
     namespace 'com.example.publisherapp'
-    compileSdk = 33
-    compileSdkExtension = 5
+    compileSdkPreview = "UpsideDownCakePrivacySandbox"
 
     defaultConfig {
         applicationId "com.example.publisherapp"
 
-        targetSdkVersion 33
-        minSdkVersion 33
+        compileSdkPreview = "UpsideDownCakePrivacySandbox"
         versionCode 1
         versionName "1.0"
 
