@@ -123,6 +123,10 @@ adb shell device_config put adservices fledge_js_isolate_enforce_max_heap_size f
 adb shell device_config put adservices fledge_custom_audience_service_kill_switch false
 adb shell device_config put adservices fledge_select_ads_kill_switch false
 adb shell device_config put adservices adid_kill_switch false
+adb shell device_config put adservices disable_fledge_enrollment_check true
+adb shell device_config put adservices fledge_register_ad_beacon_enabled true
+adb shell device_config put adservices fledge_measurement_report_and_register_event_api_enabled true
+adb shell device_config put adservices disable_measurement_enrollment_check true
 ```
 
 You can copy and paste the entire block of commands above into your terminal and
