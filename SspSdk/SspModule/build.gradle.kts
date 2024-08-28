@@ -21,8 +21,8 @@ plugins {
 
 android {
     namespace = "com.example.sspsdk"
-    compileSdk = 33
-    compileSdkExtension = 5
+    compileSdk = 34
+    compileSdkExtension = 12
 
     buildTypes {
         release {

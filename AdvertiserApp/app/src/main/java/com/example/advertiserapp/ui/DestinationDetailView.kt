@@ -88,11 +88,11 @@ fun DestinationDetailView(
         val context = LocalContext.current
         Button(
             onClick = {
-                val outcome = viewModel.registerTrigger(destination.name)
+                val outcome = viewModel.registerTrigger(destination.name.lowercase())
                 outcome?.let {
-                    Toast.makeText(context, outcome, Toast.LENGTH_SHORT)
+                    Toast.makeText(context, outcome, Toast.LENGTH_SHORT).show()
                 }
-                      },
+            },
             modifier = Modifier.padding(all = 14.dp),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.outlinedButtonColors(

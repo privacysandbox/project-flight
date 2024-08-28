@@ -12,6 +12,6 @@
      limitations under the License.
 -->
 <ad-services-config>
-    <attribution allowAdPartnersToAccess="your-enrollment-id-here" allowAllToAccess="false" />
-    <custom-audiences allowAdPartnersToAccess="your-enrollment-id-here" allowAllToAccess="false" />
+    <attribution allowAllToAccess="true" />
+    <custom-audiences allowAllToAccess="true" />
 </ad-services-config>

@@ -34,8 +34,8 @@ System requirements:
 
 -   Android Studio Giraffe | 2022.3.1 RC 1 or higher
 -   Gradle 8.1 or higher
--   An emulator or physical Pixel device running a [Tiramisu Privacy Sandbox (API
-    level 33) extension 5][1] system image with Play Store enabled.
+-   An emulator or physical Pixel device running an [API 34-ext12][1] or higher system
+    image with Play Store enabled.
 
 ### Checkout the codebase
 
@@ -99,7 +99,7 @@ Open up the AdvertiserApp or PublisherApp projects in Android Studio and start
 your emulator. Follow these instructions to set up your emulator to run the
 project.
 
-First, toggle the Privacy Sandbox to "On" in Settings. You can navigate to the
+First, toggle the Privacy Sandbox APIs to "On" in Settings. You can navigate to the
 correct screen with this command:
 
 ```
@@ -123,66 +123,46 @@ adb shell device_config put adservices fledge_js_isolate_enforce_max_heap_size f
 adb shell device_config put adservices fledge_custom_audience_service_kill_switch false
 adb shell device_config put adservices fledge_select_ads_kill_switch false
 adb shell device_config put adservices adid_kill_switch false
-adb shell device_config put adservices disable_fledge_enrollment_check true
 adb shell device_config put adservices fledge_register_ad_beacon_enabled true
 adb shell device_config put adservices fledge_measurement_report_and_register_event_api_enabled true
-adb shell device_config put adservices disable_measurement_enrollment_check true
 ```
 
 You can copy and paste the entire block of commands above into your terminal and
 they will each execute in turn.
 
-### Enroll your project
+### Configure enrollment
 
-If you haven't done so already for your project, you must enroll your site URL
+For local testing of this project, we recommend [turning off enrollment][17]. 
+You can turn off enrollment for Protected Audience and Attribution Reporting 
+APIs with these commands: 
+
+```
+adb shell device_config put adservices disable_fledge_enrollment_check true
+adb shell device_config put adservices disable_measurement_enrollment_check true
+```
+
+If you have run these commands and are getting enrollment-related errors,
+make sure you have at least the API 34-ext12 system image installed on Android
+Studio. You can check for this by opening Tools > SDK Manager, and looking at
+the "API Level" column to find an Android SDK Platform and Google Play System
+Image at least at the API 34-ext12 level. Check the boxes next to the Android SDK
+Platform and Google Play System Image and then click the "Apply" button at the
+bottom right corner of the SDK manager. Then try creating a new emulator with at
+least API 34-ext12 and running the project setup steps again.
+
+For production testing, you must enroll your site URL
 to use Protected Audiences (e.g. `https://example.com`) and your source and
 trigger URLs to use Attribution Reporting (e.g.
 `https://example.com/register_source`). Read the [enrollment
 documentation][11] to begin the enrollment process.
-
-Once you have completed enrollment, you will receive an enrollment URL and
-enrollment ID that you can use to set up your project in the following steps.
-
-1.  Add your enrollment URL to your device with this command:
-
-    ```
-    adb shell device_config put adservices mdd_measurement_manifest_file_url <your-enrollment-url>
-    ```
-1.  Verify your enrollment URL with this command:
-
-    ```
-    adb shell device_config get adservices mdd_measurement_manifest_file_url
-    ```
-1.  Run the Publisher App, or make a call with any of the Privacy Sandbox APIs
-    (e.g. `registerSource()` or `joinCustomAudience()`). **This call is expected
-    to fail**.
-1.  Force the enrollment job with this command:
-
-    ```
-    adb shell cmd jobscheduler run -f com.google.android.adservices.api 14
-    ```
-1.  Replace the enrollment ID in the [ad_services_config][12] file in the [MMP
-    SDK Module][13] and the [SSP SDK Module][14]
-1.  Make sure the URLs in the project to match the urls that you have enrolled
-    1.  In the MMP SDK Module:
-        1. Make sure [`topLevelDomain`][15] matches your site
-        1. Make sure [`registerTriggerUrl`][9] matches your enrolled URL
-        for `registerTrigger()`
-    1. In the SSP SDK Module:
-        1.  Make sure [`topLevelDomain`][16] matches your site
-        1.  Make sure [`registerSourceUrl`][8] matches your enrolled URL
-            for `registerSource()`
-1.  If you have followed all instructions and are getting a `Caller not
-    authorized` error, try restarting the device.
 
 ### Running the use cases
 
 #### Select and show an Ad
 
 1.  Open the AdvertiserApp project.
-1.  Click either "Athens" or "Cairo" to add you to a custom audience for the
-    given location. (Clicking Berlin or Delhi will not add you to a custom
-    audience.)
+1.  Click either "Athens", "Berlin", or "Cairo" to add you to a custom audience
+    for the given location. (Clicking Delhi will not add you to a custom audience.)
 1.  Open the PublisherApp project
 1.  See the ad for the place you chose appear
 
@@ -192,32 +172,14 @@ enrollment ID that you can use to set up your project in the following steps.
     show an Ad" section. You can't attribute an ad that isn't shown.
 1.  Open PublisherApp, and click on the ad that is shown. You will see a toast
     appear that indicates if the source registration was successful.
-1.  Run the job to record the registration on device
-    1.  For Tiramisu (API level 33) and lower, run
-
-        ```
-        adb shell cmd jobscheduler run -f com.google.android.adservices.api 15
-        ```
-    1.  For UpsideDownCake (API level 34) and higher, run
-
-    ```
-    adb shell cmd jobscheduler run -f com.google.android.adservices.api 20
-    ```
 1.  Open AdvertiserApp, and navigate to a product detail page (e.g. click the
     button that says "Athens")
 1.  Click the "Book Now" button. You will see a toast appear that will indicate
-    if the trigger registration was successful
-1.  Run the job to record the registration on device
-    1.  For Tiramisu (API level 33) and below, run
-
-        ```
-        adb shell cmd jobscheduler run -f com.google.android.adservices.api 15
-        ```
-    1.  For UpsideDownCake (API level 34) and above, run
-
-        ```
-        adb shell cmd jobscheduler run -f com.google.android.adservices.api 20
-        ```
+    if the trigger registration was successful.
+1.  Run the job to record the source and trigger registrations on device
+    ```
+    adb shell cmd jobscheduler run -f com.google.android.adservices.api 20
+    ```
 1.  Force the AttributionJobService
 
     ```
@@ -240,6 +202,18 @@ enrollment ID that you can use to set up your project in the following steps.
     "Without-Functions," you will be able to verify receipt of the reports, but
     not be able to see their contents_.
 
+#### Debugging
+
+To help with debugging, you can enable more verbose logging for the Privacy Sandbox
+modules with the following commands:
+```
+adb shell setprop log.tag.adservices VERBOSE
+adb shell setprop log.tag.adservices.fledge VERBOSE
+adb shell setprop log.tag.adservices.measurement VERBOSE
+```
+
+You can then filter logcat by `adservices` to see Privacy Sandbox related issues. 
+
 [1]: https://developer.android.com/design-for-safety/privacy-sandbox/setup-device-access?version=beta
 [2]: https://github.com/android/privacy-sandbox-samples/tree/main/Fledge/FledgeServerSpec
 [3]: https://github.com/android/privacy-sandbox-samples/tree/main/AttributionReporting
@@ -256,3 +230,4 @@ enrollment ID that you can use to set up your project in the following steps.
 [14]: https://github.com/privacysandbox/project-flight/blob/main/SspSdk/SspModule/src/main/res/xml/ad_services_config.xml
 [15]: https://github.com/privacysandbox/project-flight/blob/main/MmpSdk/MmpModule/src/main/java/com/example/mmpsdk/MmpSdkImpl.kt#L55
 [16]: https://github.com/privacysandbox/project-flight/blob/main/SspSdk/SspModule/src/main/java/com/example/sspsdk/SspSdkImpl.kt#L49
+[17]: https://developer.android.com/design-for-safety/privacy-sandbox/setup-device-access?version=beta#deactivate-enrollment

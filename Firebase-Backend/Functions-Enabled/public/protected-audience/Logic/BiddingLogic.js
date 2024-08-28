@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-  
+
   /**
    * Generates a bid of 10 for the athens CA,a bid of 15 for cairo, and a bid of 5 otherwise
    */
@@ -22,17 +22,21 @@
     var bid = 5;
     if (custom_audience_bidding_signals.name === "athens") {
         bid = 10;
+        bid += trusted_bidding_signals.debugValue || 0;
     }
     else if (custom_audience_bidding_signals.name === "cairo") {
-    	bid = 15;
+      bid = 15;
     }
     return {'status': 0, 'ad': ad, 'bid': bid };
   }
-  
+
   function reportWin(ad_selection_signals, per_buyer_signals, signals_for_buyer,
    contextual_signals, custom_audience_reporting_signals) {
     // Add the address of your reporting server here
     let reporting_address = 'https://reporting.example.com';
+    let ca_name = custom_audience_reporting_signals.name;
+    registerAdBeacon({'view':
+        reporting_address + '/attribution/source?attribution_id=' + ca_name + '&type=view'});
     return {'status': 0, 'results': {'reporting_uri':
-           reporting_address + '/reportWin?ca=' + custom_audience_reporting_signals.name} };
+           reporting_address + '/reportWin?ca=' + ca_name} };
   }

@@ -180,6 +180,7 @@ class MmpSdkImpl constructor(
                     }
 
                     override fun onError(error: java.lang.Exception?) {
+                        Log.e(logTag, "joinCustomAudience exception: ", error)
                         completer.setException(error!!)
                     }
                 })

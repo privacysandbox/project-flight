@@ -19,6 +19,10 @@ package com.example.sspsdk
 import android.adservices.adselection.AdSelectionConfig
 import android.adservices.adselection.AdSelectionManager
 import android.adservices.adselection.AdSelectionOutcome
+import android.adservices.adselection.ReportEventRequest
+import android.adservices.adselection.ReportEventRequest.FLAG_REPORTING_DESTINATION_BUYER
+import android.adservices.adselection.ReportEventRequest.FLAG_REPORTING_DESTINATION_SELLER
+import android.adservices.adselection.ReportImpressionRequest
 import android.adservices.common.AdSelectionSignals
 import android.adservices.common.AdTechIdentifier
 import android.adservices.measurement.MeasurementManager
@@ -28,7 +32,7 @@ import android.os.Build
 import android.os.OutcomeReceiver
 import android.os.ext.SdkExtensions
 import android.util.Log
-import android.view.InputEvent
+import android.view.MotionEvent
 import androidx.concurrent.futures.CallbackToFutureAdapter
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -150,12 +154,84 @@ class SspSdkImpl constructor(
         }
     }
 
+    fun reportImpression(adSelectionId: Long) : ListenableFuture<Any?> {
+        val executor: Executor = Executors.newCachedThreadPool()
+        val reportImpressionRequest = ReportImpressionRequest(adSelectionId, adSelectionConfig)
+        return CallbackToFutureAdapter.getFuture { completer: CallbackToFutureAdapter.Completer<Any?> ->
+            try {
+                adSelectionManager.reportImpression(
+                    reportImpressionRequest,
+                    executor,
+                    object : OutcomeReceiver<Any, Exception> {
+                        override fun onResult(result: Any) {
+                            Log.i(logTag, "Report impression succeeded")
+                            completer.set(
+                                Object()
+                            )
+                        }
+
+                        override fun onError(error: Exception) {
+                            Log.e(logTag, "Error during impression reporting", error)
+
+                            // Return null to indicate no impression was reported.
+                            completer.set(null)
+                        }
+                    }
+                )
+            } catch (e: IllegalStateException) {
+                Log.e(logTag, "Error when reporting impression", e)
+                completer.set(null)
+            }
+        }
+    }
+
+    fun reportEvent(adSelectionId: Long, key: String, data: String) : ListenableFuture<Any?> {
+        val executor: Executor = Executors.newCachedThreadPool()
+        val reportingDestinations =
+            FLAG_REPORTING_DESTINATION_BUYER or FLAG_REPORTING_DESTINATION_SELLER
+        val reportEventRequest = ReportEventRequest.Builder(
+            adSelectionId,
+            key,
+            data,
+            reportingDestinations
+        ).build()
+        return CallbackToFutureAdapter.getFuture { completer: CallbackToFutureAdapter.Completer<Any?> ->
+            try {
+                adSelectionManager.reportEvent(
+                    reportEventRequest,
+                    executor,
+                    object : OutcomeReceiver<Any, Exception> {
+                        override fun onResult(result: Any) {
+                            Log.i(logTag, "Report event succeeded")
+                            completer.set(
+                                Object()
+                            )
+                        }
+
+                        override fun onError(error: Exception) {
+                            Log.e(logTag, "Error during event reporting", error)
+
+                            // Return null to indicate no event was reported.
+                            completer.set(null)
+                        }
+                    }
+                )
+            } catch (e: IllegalStateException) {
+                Log.e(logTag, "Error when reporting event", e)
+                completer.set(null)
+            }
+        }
+    }
+
     /*
      * Registers a source.
      */
-    fun registerSource(identifier: String, inputEvent: InputEvent) : ListenableFuture<String> {
+    fun registerSource(identifier: String, inputEvent: MotionEvent) : ListenableFuture<String> {
         val executor = Executors.newCachedThreadPool()
-        val registerSourceUri = Uri.parse("$registerSourceUrl$registerSourceIdentifier$identifier")
+        var registerSourceUri = Uri.parse("$registerSourceUrl$registerSourceIdentifier$identifier")
+        if (inputEvent.action == MotionEvent.ACTION_DOWN) {
+            registerSourceUri = registerSourceUri.buildUpon().appendQueryParameter("type", "click").build()
+        }
 
         Log.d(logTag, "registerSource called")
         Log.d(logTag, "registerSource URL is = $registerSourceUri")

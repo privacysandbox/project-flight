@@ -10,22 +10,34 @@
     "source": ".well-known/attribution-reporting/**",
     "function": "receiveReport",
     "region": "us-central1"
+  },
+  {
+    "source": "/attribution/source",
+    "function": "attributionSource",
+    "region": "us-central1"
+  },
+  {
+    "source": "attribution/**",
+    "function": "receiveReport",
+    "region": "us-central1"
+  },
+  {
+    "source": "test/writeData",
+    "function": "databaseWrite",
+    "region": "us-central1"
+  },
+  {
+    "source": "test/readData",
+    "function": "databaseRead",
+    "region": "us-central1"
+  },
+  {
+    "source": "protected-audience/Functions/ReportWin",
+    "function": "reportWin",
+    "region": "us-central1"
   }
    ],
     "headers": [
-      {
-        "source": "attribution/source",
-        "headers": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Attribution-Reporting-Register-Source",
-            "value": "{\"source_event_id\":\"123001\",\"destination\":\"android-app://com.example.advertiserapp\",\"expiry\":\"172800\",\"aggregation_keys\":{\"campaignCounts\":\"0x159\",\"geoValue\":\"0x5\"}}"
-          }
-        ]
-      },
       {
         "source": "attribution/trigger",
         "headers": [
@@ -50,6 +62,33 @@
       },
       {
         "source": ".well-known/attribution-reporting/report-aggregate-attribution",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+            {
+        "source": ".well-known/attribution-reporting/debug/report-aggregate-attribution",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+            {
+        "source": ".well-known/attribution-reporting/debug/report-event-attribution",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      {
+        "source": ".well-known/attribution-reporting/debug/verbose",
         "headers": [
           {
             "key": "Content-Type",

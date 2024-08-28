@@ -18,7 +18,7 @@ package com.example.publisherapp.viewmodel
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.view.InputEvent
+import android.view.MotionEvent
 import androidx.lifecycle.ViewModel
 import com.example.publisherapp.model.PageData
 import com.example.sspsdk.SspSdkImpl
@@ -65,6 +65,11 @@ class PrivacySandboxViewModel(
                 // this outcome can be fetched early and then delay rendering the ad.
                 val outcome = it.runAdSelection().get()
                 outcome?.let {
+                    val adSelectionId = it.adSelectionId
+                    sspSdk?.let {
+                        it.reportImpression(adSelectionId).get()
+                        it.reportEvent(adSelectionId, "view", "{example_event_data: \"ad viewed\"}")
+                    }
                     return it.renderUri.toString()
                 }
             } catch (e: Exception) {
@@ -77,7 +82,7 @@ class PrivacySandboxViewModel(
     /**
      * Uses Attribution Reporting API to register that the ad was clicked.
      */
-    fun registerSource(event: InputEvent): String? {
+    fun registerSource(event: MotionEvent): String? {
         sspSdk?.let {
             return try {
                 sspSdk.registerSource(getAttributionIdentifier(), event).get()

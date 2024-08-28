@@ -33,6 +33,9 @@
    contextual_signals, custom_audience_reporting_signals) {
     // Add the address of your reporting server here
     let reporting_address = 'https://reporting.example.com';
+    let ca_name = custom_audience_reporting_signals.name;
+    registerAdBeacon({'view':
+        reporting_address + '/attribution/source?attribution_id=' + ca_name + '&type=view'});
     return {'status': 0, 'results': {'reporting_uri':
-           reporting_address + '/reportWin?ca=' + custom_audience_reporting_signals.name} };
+           reporting_address + '/reportWin?ca=' + ca_name} };
   }
