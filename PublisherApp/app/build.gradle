@@ -34,6 +34,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -75,4 +77,10 @@ dependencies {
     implementation 'androidx.concurrent:concurrent-futures:1.1.0'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    // unit test dependencies
+    testImplementation "androidx.test:runner:1.6.2"
+
+    // android test dependencies
+    androidTestImplementation "androidx.test:runner:1.6.2"
 }
