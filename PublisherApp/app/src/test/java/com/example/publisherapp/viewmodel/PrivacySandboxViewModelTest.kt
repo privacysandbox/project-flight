@@ -21,15 +21,21 @@ import org.junit.Test
 
 class PrivacySandboxViewModelTest {
     @Test
-    fun initializeFromStaticData() {
+    fun initialUiState() {
         // TODO: replace null param with a mocked SspSdkImpl
         val privacySandboxViewModel = PrivacySandboxViewModel(null)
-
         val initialUiState = privacySandboxViewModel.uiState.value
+
         // default uninitialized values
         Assert.assertEquals(
             PageData("", "", "", "", listOf(""), null),
             initialUiState)
+    }
+
+    @Test
+    fun initializeFromStaticData() {
+        // TODO: replace null param with a mocked SspSdkImpl
+        val privacySandboxViewModel = PrivacySandboxViewModel(null)
 
         val updatedFields = PageData(
             "my-title",
