@@ -36,7 +36,6 @@ class PrivacySandboxViewModelTest {
     fun initializeFromStaticData() {
         // TODO: replace null param with a mocked SspSdkImpl
         val privacySandboxViewModel = PrivacySandboxViewModel(null)
-
         val updatedFields = PageData(
             "my-title",
             "my-subtitle",
@@ -45,9 +44,10 @@ class PrivacySandboxViewModelTest {
             listOf("paragraph-1", "paragraph-2"),
             "my-url"
         )
-        privacySandboxViewModel.initializeFromStaticData(updatedFields)
 
+        privacySandboxViewModel.initializeFromStaticData(updatedFields)
         val updatedUiState = privacySandboxViewModel.uiState.value
+
         Assert.assertEquals(updatedFields, updatedUiState)
     }
 }
