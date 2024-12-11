@@ -23,6 +23,7 @@ class PublisherAppTest {
     @Test
     fun privacySandboxViewModel_appContext() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+
         Assert.assertEquals("com.example.publisherapp", appContext.packageName)
     }
 }
