@@ -49,8 +49,7 @@ class PrivacySandboxViewModel(
                 subtitle = data.subtitle,
                 author = data.author,
                 metadata = data.metadata,
-                paragraphs = data.paragraphs,
-                adUrl = data.adUrl
+                paragraphs = data.paragraphs
             )
         }
     }
