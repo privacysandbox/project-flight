@@ -41,8 +41,7 @@ class PrivacySandboxViewModelTest {
             "my-subtitle",
             "my-author",
             "my-metadata",
-            listOf("paragraph-1", "paragraph-2"),
-            "my-url"
+            listOf("paragraph-1", "paragraph-2")
         )
 
         privacySandboxViewModel.initializeFromStaticData(updatedFields)
